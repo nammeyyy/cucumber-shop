@@ -12,6 +12,11 @@ public class Product {
     }
 
     public void cutStock(int quantity) {
+        if (quantity > stock) {
+            throw new InsufficientStockException(
+                    "Can't cut stock " + quantity + " pieces. Remaining stock is " + stock
+            );
+        }
         stock -= quantity;
     }
 

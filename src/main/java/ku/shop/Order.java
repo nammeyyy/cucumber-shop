@@ -14,8 +14,15 @@ public class Order {
     }
 
     public void addItem(Product prod, int quantity) {
-        items.add(new OrderItem(prod, quantity));
+        // Check stock before adding to order
+        if (quantity > prod.getStock()) {
+            throw new InsufficientStockException(
+                    "Cannot add " + quantity + " pieces of " + prod.getName() +
+                            " to order. Available stock is " + prod.getStock()
+            );
+        }
         prod.cutStock(quantity);
+        items.add(new OrderItem(prod, quantity));
     }
 
     public double getTotal() {
